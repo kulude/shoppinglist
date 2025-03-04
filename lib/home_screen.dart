@@ -9,11 +9,11 @@ class HomeScreen extends StatelessWidget {
   final FavoritesProvider favoritesProvider;
 
   const HomeScreen({
-    Key? key,
+    super.key,
     required this.books,
     required this.cartProvider,
     required this.favoritesProvider,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

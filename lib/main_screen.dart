@@ -7,7 +7,7 @@ import 'package:myapp/favorites_screen.dart';
 import 'package:myapp/profile_screen.dart';
 import 'package:myapp/cart_screen.dart';
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  const MainScreen({super.key });
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -17,6 +17,8 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
   final CartProvider _cartProvider = CartProvider();
   final FavoritesProvider _favoritesProvider = FavoritesProvider();
+  final bool _isSearching = false;
+  final SearchController _searchController = SearchController();
   
   // Sample book data
   final List<Book> _books = [
@@ -61,12 +63,13 @@ class _MainScreenState extends State<MainScreen> {
       description: 'A fantasy novel about Bilbo Baggins and his adventures.',
     ),
   ];
-
+  List<Book> _filteredBooks = [];
   final List<Widget> _screens = [];
 
   @override
   void initState() {
     super.initState();
+    _filteredBooks = [..._books];
     // Initialize screens with providers
     _screens.addAll([
       HomeScreen(books: _books, cartProvider: _cartProvider, favoritesProvider: _favoritesProvider),
@@ -76,8 +79,12 @@ class _MainScreenState extends State<MainScreen> {
     ]);
   }
 
+  
   @override
   Widget build(BuildContext context) {
+    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isTablet = screenWidth > 600;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Book Shop'),

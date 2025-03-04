@@ -6,10 +6,10 @@ class FavoritesScreen extends StatelessWidget {
   final CartProvider cartProvider;
 
   const FavoritesScreen({
-    Key? key,
+    super.key,
     required this.favoritesProvider,
     required this.cartProvider,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +27,9 @@ class FavoritesScreen extends StatelessWidget {
     return ListView.builder(
       itemCount: favoriteBooks.length,
       itemBuilder: (ctx, i) => ListTile(
-        leading: Container(
-          width: 50,
-          height: 50,
-          color: Colors.grey[300],
+        leading: CircleAvatar(
+          radius: 20,
+          backgroundColor: Colors.grey[300],
           child: Center(
             child: Text(
               favoriteBooks[i].title.substring(0, 1),

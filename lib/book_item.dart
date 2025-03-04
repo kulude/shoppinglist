@@ -9,11 +9,11 @@ class BookItem extends StatefulWidget {
   final FavoritesProvider favoritesProvider;
 
   const BookItem({
-    Key? key,
+    super.key,
     required this.book,
     required this.cartProvider,
     required this.favoritesProvider,
-  }) : super(key: key);
+  });
 
   @override
   State<BookItem> createState() => _BookItemState();

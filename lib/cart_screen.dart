@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/providers/cart_provider.dart';
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   final CartProvider cartProvider;
 
   const CartScreen({
-    Key? key,
+    super.key,
     required this.cartProvider,
-  }) : super(key: key);
+  });
 
   @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  @override
   Widget build(BuildContext context) {
-    final cartItems = cartProvider.items;
-    final totalAmount = cartProvider.totalAmount;
+    final cartItems = widget.cartProvider.items;
+    final totalAmount = widget.cartProvider.totalAmount;
 
     if (cartItems.isEmpty) {
       return const Center(
@@ -28,10 +33,9 @@ class CartScreen extends StatelessWidget {
           child: ListView.builder(
             itemCount: cartItems.length,
             itemBuilder: (ctx, i) => ListTile(
-              leading: Container(
-                width: 50,
-                height: 50,
-                color: Colors.grey[300],
+              leading: CircleAvatar(
+                radius: 15,
+                backgroundColor: Colors.grey[300],
                 child: Center(
                   child: Text(
                     cartItems[i].book.title.substring(0, 1),
@@ -47,20 +51,20 @@ class CartScreen extends StatelessWidget {
                   IconButton(
                     icon: const Icon(Icons.remove),
                     onPressed: () {
-                      cartProvider.decreaseQuantity(cartItems[i].book);
+                      widget.cartProvider.decreaseQuantity(cartItems[i].book);
                     },
                   ),
                   Text('${cartItems[i].quantity}'),
                   IconButton(
                     icon: const Icon(Icons.add),
                     onPressed: () {
-                      cartProvider.increaseQuantity(cartItems[i].book);
+                      widget.cartProvider.increaseQuantity(cartItems[i].book);
                     },
                   ),
                   IconButton(
                     icon: const Icon(Icons.delete),
                     onPressed: () {
-                      cartProvider.removeFromCart(cartItems[i].book);
+                      widget.cartProvider.removeFromCart(cartItems[i].book);
                     },
                   ),
                 ],
